@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RK Lodge</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+    /* Navigation Bar */
+    nav {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 15px;
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 100;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: white;
+      margin: 5px 10px;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 5px 10px;
+      border-radius: 10px;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+    nav a:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=1471&auto=format&fit=crop') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-box {
+      background: rgba(0,0,0,0.5);
+      padding: 50px 80px;
+      border-radius: 20px;
+      z-index: 3;
+      position: relative;
+    }
+    .hero-box h1 {
+      font-size: 3.5rem;
+      font-weight: bold;
+    }
+    /* Scrollable Content Section */
+    .scroll-page {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, lightgray, darkgray);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .info {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    }
+    .sections {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .box {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      padding: 40px;
+      border-radius: 15px;
+      width: 200px;
+      text-align: center;
+      font-size: 1.5rem;
+      margin: 10px;
+    }
+    /* Admin Section */
+    #adminInfo {
+      color: gray;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #passwordSection {
+      display: none;
+      text-align: center;
+    }
+    input[type="text"], input[type="password"] {
+      padding: 5px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 5px 15px;
+      cursor: pointer;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      nav {
+        max-width: 100%;
+        padding: 5px;
+      }
+      nav a {
+        font-size: 0.8rem;
+        margin: 3px 5px;
+        padding: 3px;
+      }
+      .hero-box h1 {
+        font-size: 2rem;
+      }
+      .box {
+        width: 150px;
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#rooms">Room's</a>
+    <a href="#About">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#location">Location</a>
+  </nav>
+  
+  <div class="hero">
+    <div class="hero-box">
+      <h1>Welcome to RK Lodge</h1>
+      <p>Your comfort is our priority.</p>
+    </div>
+  </div>
+  
+  <div class="scroll-page" id="rooms">
+    <div class="info" id="about">
+      <h2>About RK Lodge</h2>
+      <p id="pricing">We offer comfortable and affordable accommodations with top-notch amenities. Choose from our AC rooms, non-AC rooms, or simple bed options to suit your budget.<br>
+      AC Room: ₹<span id="acPriceDisplay">2000</span> per night | Non-AC Room: ₹<span id="nonAcPriceDisplay">1500</span> per night | Only Bed: ₹<span id="bedPriceDisplay">800</span> per night</p>
+    </div>
+    
+    <div class="sections">
+      <div class="box" id="acRoom">AC Room: ₹<span id="acRoomPrice">2000</span></div>
+      <div class="box" id="nonAcRoom">Non-AC Room: ₹<span id="nonAcRoomPrice">1500</span></div>
+      <div class="box" id="onlyBed">Only Bed: ₹<span id="onlybedPrice">800</span></div>
+    </div>
+
+    <p id="adminInfo" onclick="showPasswordSection()">Admin Info</p>
+
+    <div id="passwordSection">
+      <input type="password" id="password" placeholder="Enter Password">
+      <button onclick="checkPassword()">Login</button>
+      <div id="priceInputSection" style="display: none;">
+        <input type="text" id="acPrice" placeholder="AC Room Price">
+        <input type="text" id="nonAcPrice" placeholder="Non-AC Room Price">
+        <input type="text" id="bedPrice" placeholder="Only Bed Price">
+        <button onclick="updatePrices()">Update Prices</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const correctPassword = "1522008";
+
+    function showPasswordSection() {
+      document.getElementById("passwordSection").style.display = "block";
+    }
+
+    function checkPassword() {
+      const password = document.getElementById("password").value;
+      if (password === correctPassword) {
+        document.getElementById("priceInputSection").style.display = "block";
+      } else {
+        alert("Incorrect password!");
+      }
+    }
+
+    function updatePrices() {
+      const acPrice = document.getElementById("acPrice").value || "2000";
+      const nonAcPrice = document.getElementById("nonAcPrice").value || "1500";
+      const bedPrice = document.getElementById("bedPrice").value || "800";
+
+      localStorage.setItem("acPrice", acPrice);
+      localStorage.setItem("nonAcPrice", nonAcPrice);
+      localStorage.setItem("bedPrice", bedPrice);
+
+      displayPrices();
+    }
+
+    function displayPrices() {
+      document.getElementById("acPriceDisplay").textContent = localStorage.getItem("acPrice") || "2000";
+      document.getElementById("nonAcPriceDisplay").textContent = localStorage.getItem("nonAcPrice") || "1500";
+      document.getElementById("bedPriceDisplay").textContent = localStorage.getItem("bedPrice") || "800";
+      document.getElementById("acRoomPrice").textContent = localStorage.getItem("acPrice") || "2000";
+      document.getElementById("nonAcRoomPrice").textContent = localStorage.getItem("nonAcPrice") || "1500";
+      document.getElementById("onlybedPrice").textContent = localStorage.getItem("bedPrice") || "800";
+    }
+
+    window.onload = displayPrices;
+  </script>
+</body>
+</html>
